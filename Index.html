@@ -1,0 +1,123 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Fee Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: black;
+            color: white;
+        }
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+        .gym-name {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, red, yellow);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: blink 1s infinite alternate;
+        }
+        @keyframes blink {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            padding: 10px;
+            margin: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        .due { color: red; }
+        .paid { color: green; }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Logo.png" alt="Gym Logo" class="logo">
+        <h1 class="gym-name">GYMLkH</h1>
+    </header>
+    <main>
+        <div class="container">
+            <h2>Manage Students</h2>
+            <button onclick="addStudent()">Add Student</button>
+            <button onclick="removeStudent()">Remove Student</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Month</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="student-list">
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <script>
+        function addStudent() {
+            let name = prompt("Enter student name:");
+            let month = prompt("Enter month:");
+            if (name && month) {
+                let table = document.getElementById("student-list");
+                let row = table.insertRow();
+                row.insertCell(0).innerText = name;
+                row.insertCell(1).innerText = month;
+                let statusCell = row.insertCell(2);
+                statusCell.innerHTML = '<span class="due">Due</span>';
+                let actionCell = row.insertCell(3);
+                let payButton = document.createElement("button");
+                payButton.innerText = "Pay";
+                payButton.onclick = function() {
+                    statusCell.innerHTML = '<span class="paid">Paid</span>';
+                };
+                actionCell.appendChild(payButton);
+            }
+        }
+        function removeStudent() {
+            let table = document.getElementById("student-list");
+            if (table.rows.length > 0) {
+                table.deleteRow(table.rows.length - 1);
+            } else {
+                alert("No students to remove");
+            }
+        }
+    </script>
+</body>
+</html>
